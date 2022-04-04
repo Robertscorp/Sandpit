@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandpit.Console", "Sandpit.Console\Sandpit.Console.csproj", "{2680E2EF-4393-48F4-A23B-7160EF03A1B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2680E2EF-4393-48F4-A23B-7160EF03A1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2680E2EF-4393-48F4-A23B-7160EF03A1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2680E2EF-4393-48F4-A23B-7160EF03A1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2680E2EF-4393-48F4-A23B-7160EF03A1B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97535912-939A-4D35-B30B-87416B620D3E}
+	EndGlobalSection
+EndGlobal
