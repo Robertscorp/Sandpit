@@ -10,7 +10,7 @@ namespace Sandpit.Console.Persistence
         #region - - - - - - Methods - - - - - -
 
         public PersistenceContext CreateDbContext(string[] args)
-            => new(new DbContextOptionsBuilder<PersistenceContext>()
+            => new PersistenceContext(new DbContextOptionsBuilder<PersistenceContext>()
                         .UseSqlite("Data Source=Database.db")
                         .Options);
 

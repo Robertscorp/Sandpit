@@ -2,51 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sandpit.Console.Persistence;
 
 namespace Sandpit.Console.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    partial class PersistenceContextModelSnapshot : ModelSnapshot
+    [Migration("20220407081404_AddSemiStaticEntity")]
+    partial class AddSemiStaticEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.23");
-
-            modelBuilder.Entity("Sandpit.Console.Entities.DynamicEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("DynamicEntity");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Name = "DE1"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Name = "DE2"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Name = "DE3"
-                        });
-                });
 
             modelBuilder.Entity("Sandpit.Console.Entities.EncapsulateParent1", b =>
                 {
@@ -80,10 +50,6 @@ namespace Sandpit.Console.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SemiStaticEntity")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("ID");
 
                     b.ToTable("SemiStaticEntityOwner");
@@ -92,8 +58,7 @@ namespace Sandpit.Console.Migrations
                         new
                         {
                             ID = 1,
-                            Name = "Owner1",
-                            SemiStaticEntity = "DE1"
+                            Name = "Owner1"
                         });
                 });
 

@@ -1,4 +1,6 @@
-﻿namespace Sandpit.Console.Entities
+﻿using System.Collections.Generic;
+
+namespace Sandpit.Console.Entities
 {
 
     public class Parent

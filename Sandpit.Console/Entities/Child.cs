@@ -1,4 +1,6 @@
-﻿namespace Sandpit.Console.Entities
+﻿using System;
+
+namespace Sandpit.Console.Entities
 {
 
     public class Child
