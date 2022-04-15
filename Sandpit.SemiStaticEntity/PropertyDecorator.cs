@@ -72,7 +72,7 @@ namespace Sandpit.SemiStaticEntity
             get
             {
                 var _Value = this.m_Property[name];
-                if (_Value is RelationalTypeMapping _RelationalTypeMapping)
+                if (_Value is RelationalTypeMapping _RelationalTypeMapping && this.FindAnnotation("StaticEntity.TypeMapping") != null) // TODO: Hard-coded string.
                     _Value = this.m_RelationalTypeMappingDecoratorFactory(_RelationalTypeMapping);
 
                 return _Value;
