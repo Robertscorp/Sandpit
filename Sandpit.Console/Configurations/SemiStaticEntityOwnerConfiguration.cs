@@ -20,13 +20,13 @@ namespace Sandpit.Console.Configurations
 
             _ = builder.Property(e => e.SemiStaticEntity)
                     .HasConversion(x => "", x => default!)
-                    .HasAnnotation("TypeMapping2",
-                        new XXConverter<SemiStaticEntity, string>(
+                    .HasAnnotation("StaticEntity.TypeMapping",
+                        new XXConverter<Entities.SemiStaticEntity, string>(
                             (DbContext c, string s) =>
                             {
-                                return new SemiStaticEntity();
+                                return new Entities.SemiStaticEntity();
                             },
-                            (DbContext c, SemiStaticEntity sse) => sse.ID));
+                            (DbContext c, Entities.SemiStaticEntity sse) => sse.ID));
             //_ = builder.Property(e => e.SemiStaticEntity).HasConversion(sse => sse.ID, dbVal => default!);
             //_ = builder.Property<string>("SemiStaticEntityID");
         }

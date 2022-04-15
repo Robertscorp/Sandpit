@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.23" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sandpit.SemiStaticEntity\Sandpit.SemiStaticEntity.csproj" />
+  </ItemGroup>
+
 </Project>

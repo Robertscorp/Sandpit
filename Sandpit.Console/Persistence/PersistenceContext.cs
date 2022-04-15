@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
+using Sandpit.SemiStaticEntity;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -123,7 +123,8 @@ namespace Sandpit.Console.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //_ = optionsBuilder.ReplaceService<IDbContextServices, TestDbContextServices>();
+            //_ = optionsBuilder.ReplaceService<IDbContextServices, DbContextServicesReplacement>();
+            //_ = optionsBuilder.ReplaceService<IModelCustomizer, ModelCustomiserReplacement>();
 
             //var _ServiceCollection = new ServiceCollection();
 
@@ -134,7 +135,7 @@ namespace Sandpit.Console.Persistence
 
             //_ = optionsBuilder.ReplaceService<IValueConverterSelector, ValueConverterSelector>();
 
-            _ = optionsBuilder.ReplaceService<IShapedQueryCompilingExpressionVisitorFactory, ShapedQueryCompilingExpressionVisitorFactoryDecorator>();
+            _ = optionsBuilder.ReplaceService<IShapedQueryCompilingExpressionVisitorFactory, ShapedQueryCompilingExpressionVisitorFactoryReplacement>();
 
             //optionsBuilder.EnableServiceProviderCaching(false);
 
@@ -146,149 +147,7 @@ namespace Sandpit.Console.Persistence
 
     }
 
-    //public class TestDbContextServices : DbContextServices
-    //{
 
-    //    #region - - - - - - Methods - - - - - -
-
-    //    public override IDbContextServices Initialize(
-    //        IServiceProvider scopedProvider,
-    //        IDbContextOptions contextOptions,
-    //        DbContext context)
-    //        => base.Initialize(new ServiceProviderDecorator(context, scopedProvider), contextOptions, context);
-
-    //    #endregion Methods
-
-    //}
-
-    //public class ServiceProviderDecorator : IServiceProvider
-    //{
-
-    //    private readonly DbContext m_Context;
-    //    private readonly IServiceProvider m_ServiceProvider;
-
-    //    public ServiceProviderDecorator(DbContext context, IServiceProvider serviceProvider)
-    //    {
-    //        this.m_Context = context;
-    //        this.m_ServiceProvider = serviceProvider;
-    //    }
-
-    //    object IServiceProvider.GetService(Type serviceType)
-    //    {
-    //        //if (serviceType == typeof(IValueConverterSelector))
-    //        //    return new ValueConverterSelector(
-    //        //        this.m_Context,
-    //        //        (IValueConverterSelector)this.m_ServiceProvider.GetService(serviceType)!);
-
-    //        if (serviceType == typeof(IShapedQueryCompilingExpressionVisitorFactory))
-    //            return new ShapedQueryCompilingExpressionVisitorFactoryDecorator(
-    //                (ShapedQueryCompilingExpressionVisitorDependencies)
-    //                    this.m_ServiceProvider.GetService(typeof(ShapedQueryCompilingExpressionVisitorDependencies)),
-    //                (IShapedQueryCompilingExpressionVisitorFactory)
-    //                    this.m_ServiceProvider.GetService(typeof(IShapedQueryCompilingExpressionVisitorFactory)));
-
-    //        return this.m_ServiceProvider.GetService(serviceType);
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-
-    public class ShapedQueryCompilingExpressionVisitorFactoryDecorator : IShapedQueryCompilingExpressionVisitorFactory
-    {
-
-        #region - - - - - - Fields - - - - - -
-
-        private readonly ShapedQueryCompilingExpressionVisitorDependencies m_Dependencies;
-        private readonly RelationalShapedQueryCompilingExpressionVisitorDependencies m_RelationalDependencies;
-
-        //private readonly IShapedQueryCompilingExpressionVisitorFactory m_QueryCompilingExpressionVisitorFactory;
-
-        #endregion Fields
-
-        #region - - - - - - Constructors - - - - - -
-
-        public ShapedQueryCompilingExpressionVisitorFactoryDecorator(
-            ShapedQueryCompilingExpressionVisitorDependencies dependencies,
-            RelationalShapedQueryCompilingExpressionVisitorDependencies relationalDependencies)
-        {
-            this.m_Dependencies = dependencies;
-            this.m_RelationalDependencies = relationalDependencies;
-            //this.m_QueryCompilingExpressionVisitorFactory
-            //    = new RelationalShapedQueryCompilingExpressionVisitorFactory(dependencies, relationalDependencies);// queryCompilingExpressionVisitorFactory;
-        }
-
-        #endregion Constructors
-
-        #region - - - - - - Methods - - - - - -
-
-        ShapedQueryCompilingExpressionVisitor IShapedQueryCompilingExpressionVisitorFactory.Create(
-            QueryCompilationContext queryCompilationContext)
-            => new SemiStaticEntityShapedQueryVisitor(
-                this.m_Dependencies,
-                this.m_RelationalDependencies,
-                queryCompilationContext);
-
-        #endregion Methods
-
-    }
-
-    public class SemiStaticEntityShapedQueryVisitor : RelationalShapedQueryCompilingExpressionVisitor
-    {
-
-        #region - - - - - - Fields - - - - - -
-
-        private ShapedQueryExpression m_ShapedQueryExpression;
-        private IReadOnlyList<ReaderColumn> m_ProjectionColumns;
-
-        #endregion Fields
-
-        #region - - - - - - Constructors - - - - - -
-
-        public SemiStaticEntityShapedQueryVisitor(
-            ShapedQueryCompilingExpressionVisitorDependencies dependencies,
-            RelationalShapedQueryCompilingExpressionVisitorDependencies relationalDependencies,
-            QueryCompilationContext queryCompilationContext)
-            : base(dependencies, relationalDependencies, queryCompilationContext)
-        {
-        }
-
-        #endregion Constructors
-
-        #region - - - - - - Methods - - - - - -
-
-        protected override Expression InjectEntityMaterializers(Expression expression)
-        {
-            var _SelectExpression = (SelectExpression)this.m_ShapedQueryExpression.QueryExpression;
-            var _LambdaExpression = (LambdaExpression)expression;
-            var _DataReaderParameter = _LambdaExpression.Parameters.Single(p => p.Type == typeof(DbDataReader));
-            var _IndexMapParameter = _LambdaExpression.Parameters.Single(p => p.Type == typeof(int[]));
-            var _QueryContextParameter = _LambdaExpression.Parameters.Single(p => p.Type == typeof(QueryContext));
-
-            var _Expression = base.InjectEntityMaterializers(expression);
-
-            // 100% this is the wrong place to be injecting this behaviour... but there's not really an alternative.
-            _Expression = new RelationalProjectionBindingRemovingExpressionVisitor(
-                    _SelectExpression,
-                    _DataReaderParameter,
-                    _SelectExpression.IsNonComposedFromSql() ? _IndexMapParameter : null,
-                    _QueryContextParameter,
-                    this.IsBuffering)
-                .Visit(_Expression, out this.m_ProjectionColumns);
-
-
-            return _Expression;
-        }
-
-        protected override Expression VisitShapedQueryExpression(ShapedQueryExpression shapedQueryExpression)
-        {
-            this.m_ShapedQueryExpression = shapedQueryExpression;
-
-            return base.VisitShapedQueryExpression(shapedQueryExpression);
-        }
-
-        #endregion Methods
-
-    }
 
 
     public class RelationalProjectionBindingRemovingExpressionVisitor : ExpressionVisitor
@@ -621,5 +480,6 @@ namespace Sandpit.Console.Persistence
     //        => throw new NotImplementedException();
 
     //}
+
 
 }
