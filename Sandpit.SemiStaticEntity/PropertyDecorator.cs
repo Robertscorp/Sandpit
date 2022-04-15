@@ -23,6 +23,9 @@ namespace Sandpit.SemiStaticEntity
 
         public PropertyDecorator(IProperty property, Expression queryContextParameter)
         {
+            if (queryContextParameter is null)
+                throw new ArgumentNullException(nameof(queryContextParameter));
+
             this.m_Property = property ?? throw new ArgumentNullException(nameof(property));
             this.m_RelationalTypeMappingDecoratorFactory = mapping => new RelationalTypeMappingDecorator(mapping, this, queryContextParameter);
         }

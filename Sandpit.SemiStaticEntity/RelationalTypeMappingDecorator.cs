@@ -27,41 +27,29 @@ namespace Sandpit.SemiStaticEntity
                   relationalTypeMapping.IsUnicode,
                   relationalTypeMapping.Size)
         {
+            if (queryContextParameter is null)
+                throw new ArgumentNullException(nameof(queryContextParameter));
+
             this.m_DataReaderExpressionVisitorFactory = typeMappingAnnotation => new DataReaderExpressionVisitor(queryContextParameter, typeMappingAnnotation);
-            this.m_RelationalTypeMapping = relationalTypeMapping ?? throw new ArgumentNullException(nameof(relationalTypeMapping));
             this.m_Property = property ?? throw new ArgumentNullException(nameof(property));
+            this.m_RelationalTypeMapping = relationalTypeMapping ?? throw new ArgumentNullException(nameof(relationalTypeMapping));
         }
 
         #endregion Constructors
 
         #region - - - - - - Methods - - - - - -
 
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => throw new NotImplementedException(); // TODO: Implement
+
         public override Expression CustomizeDataReaderExpression(Expression expression)
         {
-            var _TypeMappingAnnotation = this.m_Property.FindAnnotation("StaticEntity.TypeMapping");
+            var _TypeMappingAnnotation = this.m_Property.FindAnnotation("StaticEntity.TypeMapping"); // TODO: Hard-coded string
             if (_TypeMappingAnnotation != null)
-            {
-                //var _TypeMapping = Expression.Constant(_TypeMappingAnnotation.Value);
-                //var _DbContext = Expression.Property(this.m_QueryContextParameter, nameof(QueryContext.Context));
-                //var _ToModel = Expression.Property(_TypeMapping, "ToModel");
-
-                //var _X = _TypeMapping.Type.GenericTypeArguments[1];
-                //var _X2 = expression.
-
-                //xxx // The expression parameter is returning a "SemiStaticEntity" as it's type, even though it's a call to
-                // data reader. "expression" will need to be re-written...
-
                 expression = this.m_DataReaderExpressionVisitorFactory(_TypeMappingAnnotation).Visit(expression);
-
-                //expression = expression.
-                //expression = Expression.Invoke(_ToModel, _DbContext, expression);
-            }
 
             return this.m_RelationalTypeMapping.CustomizeDataReaderExpression(expression);
         }
-
-        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => throw new System.NotImplementedException();
 
         #endregion Methods
 

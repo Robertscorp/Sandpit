@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 
 namespace Sandpit.SemiStaticEntity
 {
@@ -19,8 +20,8 @@ namespace Sandpit.SemiStaticEntity
             ShapedQueryCompilingExpressionVisitorDependencies dependencies,
             RelationalShapedQueryCompilingExpressionVisitorDependencies relationalDependencies)
         {
-            this.m_Dependencies = dependencies;
-            this.m_RelationalDependencies = relationalDependencies;
+            this.m_Dependencies = dependencies ?? throw new ArgumentNullException(nameof(dependencies));
+            this.m_RelationalDependencies = relationalDependencies ?? throw new ArgumentNullException(nameof(relationalDependencies));
         }
 
         #endregion Constructors

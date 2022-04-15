@@ -67,7 +67,7 @@ namespace Sandpit.SemiStaticEntity
                     .ToDictionary(
                         bp => bp.b.ProjectionMember,
                         bp => (Expression)Expression.Constant(
-                            bp.Item2.ToDictionary(x => this.m_DecoratorLookup[x.Key], x => x.Value))));
+                            bp.Item2.ToDictionary(pi => this.m_DecoratorLookup[pi.Key], pi => pi.Value))));
 
             return _Lambda;
         }
