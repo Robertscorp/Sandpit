@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sandpit.Console.Entities;
-using Sandpit.Console.Persistence;
+using Sandpit.SemiStaticEntity;
 
 namespace Sandpit.Console.Configurations
 {
@@ -21,7 +21,7 @@ namespace Sandpit.Console.Configurations
             _ = builder.Property(e => e.SemiStaticEntity)
                     .HasConversion(x => "", x => default!)
                     .HasAnnotation("StaticEntity.TypeMapping",
-                        new XXConverter<Entities.SemiStaticEntity, string>(
+                        new StaticEntityTypeMapping<Entities.SemiStaticEntity, string>(
                             (DbContext c, string s) =>
                             {
                                 return new Entities.SemiStaticEntity();

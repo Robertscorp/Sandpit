@@ -66,6 +66,7 @@ namespace Sandpit.SemiStaticEntity
 
         #region - - - - - - Operators - - - - - -
 
+        // TODO: Migrate the decorator behaviour so it applies to FindAnnotation and GetAnnotations
         public object this[string name]
         {
             get

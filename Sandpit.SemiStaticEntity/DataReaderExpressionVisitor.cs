@@ -25,8 +25,7 @@ namespace Sandpit.SemiStaticEntity
             if (typeMappingAnnotation is null)
                 throw new ArgumentNullException(nameof(typeMappingAnnotation));
 
-            // TODO: Fix hard-coded string.
-            this.m_TypeMappingExpression = Expression.Property(Expression.Constant(typeMappingAnnotation.Value), "ToModel");
+            this.m_TypeMappingExpression = Expression.Property(Expression.Constant(typeMappingAnnotation.Value), nameof(StaticEntityTypeMapping<object, object>.ToStaticEntity));
             this.m_QueryContextParameter = queryContextParameter ?? throw new ArgumentNullException(nameof(queryContextParameter));
         }
 

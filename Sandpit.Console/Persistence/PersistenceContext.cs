@@ -65,25 +65,6 @@ namespace Sandpit.Console.Persistence
 
     //}
 
-    public class XXConverter<TModel, TProvider>// : ValueConverter<TModel, TProvider>
-    {
-
-        public XXConverter(
-            Func<DbContext, TProvider, TModel> toModel,
-            Func<DbContext, TModel, TProvider> toProvider)//,
-                                                          //ConverterMappingHints mappingHints = null)
-                                                          //: base(default, default, mappingHints)
-        {
-            this.ToModel = toModel;
-            this.ToProvider = toProvider;
-        }
-
-        public Func<DbContext, TProvider, TModel> ToModel { get; }
-
-        public Func<DbContext, TModel, TProvider> ToProvider { get; }
-
-    }
-
     public class PersistenceContext : DbContext
     {
 
