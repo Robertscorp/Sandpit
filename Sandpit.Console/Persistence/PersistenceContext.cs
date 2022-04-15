@@ -11,68 +11,11 @@ using System.Data.Common;
 using System.Linq.Expressions;
 using System.Reflection;
 
-// ---------------------------------------
-// TODO: Consider Decorating RelationalTypeMapping and overriding CustomizeDataReaderExpression to inject the custom converter.
-
-// ---------------------------------------
-
 namespace Sandpit.Console.Persistence
 {
 
-    //public class XXX : DbContextOptionsExtensionInfo
-    //{
-    //    public XXX(IDbContextOptionsExtension extension) : base(extension)
-    //    {
-    //    }
-
-    //    public override bool IsDatabaseProvider
-    //        => false;
-
-    //    public override string LogFragment => "No";
-
-    //    public override long GetServiceProviderHashCode() => 0;
-    //    public override void PopulateDebugInfo(IDictionary<string, string> debugInfo) { }
-
-    //}
-
-    //public class XX : IDbContextOptionsExtension
-    //{
-
-    //    private readonly IDbContextOptionsExtension m_DbContextOptionsExtension;
-
-    //    public XX(IDbContextOptionsExtension dbContextOptionsExtension)
-    //        => this.m_DbContextOptionsExtension = dbContextOptionsExtension;
-
-    //    DbContextOptionsExtensionInfo IDbContextOptionsExtension.Info
-    //        => new XXX(this.m_DbContextOptionsExtension);
-
-    //    void IDbContextOptionsExtension.ApplyServices(IServiceCollection services)
-    //    {
-    //        var _X = services.Single(s => s.ServiceType == typeof(IValueConverterSelector));
-    //        _ = services.Remove(_X);
-    //        _ = services.AddScoped<IValueConverterSelector, ValueConverterSelector>();
-
-    //        _X = services.Single(s => s.ServiceType == typeof(IValueConverterSelector));
-
-
-    //        //throw new NotImplementedException();
-    //    }
-
-    //    void IDbContextOptionsExtension.Validate(IDbContextOptions options)
-    //    {
-    //        //options.FindExtension<CoreOptionsExtension>().
-    //    }
-
-    //}
-
     public class PersistenceContext : DbContext
     {
-
-        #region - - - - - - Properties - - - - - -
-
-        public Guid ID { get; set; } = Guid.NewGuid();
-
-        #endregion Properties
 
         #region - - - - - - Constructors - - - - - -
 
@@ -80,57 +23,22 @@ namespace Sandpit.Console.Persistence
 
         #endregion Constructors
 
-
-        //public override DbSet<TEntity> Set<TEntity>()
-        //    => typeof(TEntity) == typeof(Child)
-        //        ? (new ChildSet() as DbSet<TEntity>)!
-        //        : base.Set<TEntity>();
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            _ = modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceContext).Assembly);
-
-            //_ = modelBuilder.Ignore<SemiStaticEntity>();
-            //_ = modelBuilder.Ignore<EncapsulateParent1>();
-            //_ = modelBuilder.Ignore<EncapsulateParent2>();
-
-            base.OnModelCreating(modelBuilder);
-
-
-        }
-
-        public override TEntity Find<TEntity>(params object[] keyValues)
-            => base.Find<TEntity>(keyValues);
+        #region - - - - - - Methods - - - - - -
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //_ = optionsBuilder.ReplaceService<IDbContextServices, DbContextServicesReplacement>();
-            //_ = optionsBuilder.ReplaceService<IModelCustomizer, ModelCustomiserReplacement>();
+            => base.OnConfiguring(optionsBuilder.WithStaticEntities());
 
-            //var _ServiceCollection = new ServiceCollection();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+            => base.OnModelCreating(modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceContext).Assembly));
 
-            //foreach (var _X in optionsBuilder.Options.Extensions)
-            //    _X.ApplyServices(_ServiceCollection);
-
-            //_ = optionsBuilder.UseInternalServiceProvider(_ServiceCollection.BuildServiceProvider());
-
-            //_ = optionsBuilder.ReplaceService<IValueConverterSelector, ValueConverterSelector>();
-
-            _ = optionsBuilder.ReplaceService<IShapedQueryCompilingExpressionVisitorFactory, ShapedQueryCompilingExpressionVisitorFactoryReplacement>();
-
-            //optionsBuilder.EnableServiceProviderCaching(false);
-
-            //optionsBuilder.
-            _ = 0;
-
-            base.OnConfiguring(optionsBuilder);
-        }
+        #endregion Methods
 
     }
 
 
 
-
+    // TODO: Remove once ProjectionColumns behaviour is figured out.
+    // Note: This class is not used.
     public class RelationalProjectionBindingRemovingExpressionVisitor : ExpressionVisitor
     {
         private static readonly MethodInfo s_IsDbNullMethod =
@@ -354,113 +262,5 @@ namespace Sandpit.Console.Persistence
             return _ValueExpression;
         }
     }
-
-    //public class ShapedQueryCompilingExpressionVisitorDecorator : ShapedQueryCompilingExpressionVisitor
-    //{
-
-    //    #region - - - - - - Fields - - - - - -
-
-    //    private readonly ShapedQueryCompilingExpressionVisitor m_ShapedQueryCompilingExpressionVisitor;
-
-    //    #endregion Fields
-
-    //    #region - - - - - - Constructors - - - - - -
-
-    //    public ShapedQueryCompilingExpressionVisitorDecorator(
-    //        ShapedQueryCompilingExpressionVisitorDependencies dependencies,
-    //        QueryCompilationContext queryCompilationContext,
-    //        ShapedQueryCompilingExpressionVisitor shapedQueryCompilingExpressionVisitor) : base(dependencies, queryCompilationContext)
-    //        => this.m_ShapedQueryCompilingExpressionVisitor = shapedQueryCompilingExpressionVisitor;
-
-    //    #endregion Constructors
-
-    //    #region - - - - - - Methods - - - - - -
-
-    //    protected override Expression VisitShapedQueryExpression(ShapedQueryExpression shapedQueryExpression)
-    //    {
-    //        if (this.m_ShapedQueryCompilingExpressionVisitor is RelationalShapedQueryCompilingExpressionVisitor)
-    //        {
-    //            var _X = VisitX(this.m_ShapedQueryCompilingExpressionVisitor, shapedQueryExpression);// this.m_ShapedQueryCompilingExpressionVisitor.VisitShapedQueryExpression(shapedQueryExpression);
-    //            return _X;
-    //        }
-
-    //        xxx // Rather than creating a decorator,
-    //            // just inherit from RelationalShapedQueryCompilingExpressionVisitor 
-    //            // and override the InjectEntityMaterializers method.
-    //            // This will only work for the relational shaped visitor, so figure out how that plays into the solution
-    //            // It should work for this scenario, future releases can solve the problem betterer.
-
-
-    //        // TODO: FIX
-    //        throw new NotImplementedException();
-    //        //return this.m_ShapedQueryCompilingExpressionVisitor.VisitShapedQueryExpression(shapedQueryExpression);
-    //    }
-
-    //    private static Expression VisitX(ShapedQueryCompilingExpressionVisitor visitor, ShapedQueryExpression expression)
-    //        => (Expression)visitor.GetType()
-    //            .GetMethod("VisitShapedQueryExpression", BindingFlags.NonPublic | BindingFlags.Instance)
-    //            .Invoke(visitor, new object[] { expression });//return x.VisitShapedQueryExpression(this);
-
-    //    #endregion Methods
-
-    //}
-
-
-
-
-    //public class ValueConverterSelector : IValueConverterSelector
-    //{
-
-    //    //private readonly DbContext m_DbContext;
-    //    //private readonly IValueConverterSelector m_ValueConverterSelector;
-
-    //    public ValueConverterSelector()
-    //    {
-
-    //    }
-
-    //    //public ValueConverterSelector(DbContext dbContext, IValueConverterSelector valueConverterSelector)
-    //    //{
-    //    //    this.m_DbContext = dbContext;
-    //    //    this.m_ValueConverterSelector = valueConverterSelector;
-    //    //}
-
-    //    //IEnumerable<ValueConverterInfo> IValueConverterSelector.Select(Type modelClrType, Type providerClrType)
-    //    //    => modelClrType == typeof(SemiStaticEntity) && providerClrType == typeof(string)
-    //    //        ? (new[] { this.GetStaticEntityConverter() })
-    //    //        : this.m_ValueConverterSelector.Select(modelClrType, providerClrType);
-
-    //    //private ValueConverterInfo GetStaticEntityConverter()
-    //    //    => new ValueConverterInfo(
-    //    //        typeof(SemiStaticEntity),
-    //    //        typeof(string),
-    //    //        vci => new ValueConverter<SemiStaticEntity, string>(
-    //    //            sse => sse.ID,
-    //    //            id => this.m_DbContext.Find<SemiStaticEntity>(id)));
-
-    //    IEnumerable<ValueConverterInfo> IValueConverterSelector.Select(Type modelClrType, Type providerClrType)
-    //        => Enumerable.Empty<ValueConverterInfo>();
-    //}
-
-    //public interface IValueConverterFactory
-    //{
-
-    //    public Func<ValueConverterInfo, ValueConverter> GetValueConverterFunc();
-
-    //}
-
-    //public class ValueConverterFactory : IValueConverterFactory
-    //{
-
-    //    public ValueConverterFactory()
-    //    {
-
-    //    }
-
-    //    Func<ValueConverterInfo, ValueConverter> IValueConverterFactory.GetValueConverterFunc()
-    //        => throw new NotImplementedException();
-
-    //}
-
 
 }
