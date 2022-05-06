@@ -34,15 +34,15 @@ namespace Sandpit.Console
             //_PersistenceContext2.Database.Migrate();
 
 
-            //foreach (var _X in _PersistenceContext.Set<Entities.SemiStaticEntity>())
-            //{
-            //    _ = 0;
-            //}
+            foreach (var _X in _PersistenceContext.Set<Bar>().Select(b => b.Test).ToList())
+            {
+                _ = 0;
+            }
 
             //var _YX = _PersistenceContext.Set<Bar>().ToList();
-            var _XX = _PersistenceContext.Set<Foo>().ToList();
+            //var _XX = _PersistenceContext.Set<Foo>().ToList();
 
-            foreach (var _X in _PersistenceContext.Set<Foo>().Include(x => x.Bar)) //.Select(x => x.JSemiStaticEntity).AsEnumerable())
+            foreach (var _X in _PersistenceContext.Set<Foo>().Select(x => x.Bar)) //.Select(x => x.JSemiStaticEntity).AsEnumerable())
             //foreach (var _X in _PersistenceContext.Set<SemiStaticEntityOwner>()) //.Select(x => x.JSemiStaticEntity).AsEnumerable())
             {
                 _ = 0;
