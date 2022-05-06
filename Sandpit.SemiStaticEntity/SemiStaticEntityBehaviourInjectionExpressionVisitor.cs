@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Sandpit.SemiStaticEntity.Modelx;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,7 @@ namespace Sandpit.SemiStaticEntity
 
             this.m_SelectExpression.ReplaceProjectionMapping(
                 this.m_ProjectionBindings
+                    .Where(b => b.ProjectionMember != null)
                     .Select(b => (b, (IDictionary<IProperty, int>)((ConstantExpression)this.m_SelectExpression.GetMappedProjection(b.ProjectionMember)).Value))
                     .ToDictionary(
                         bp => bp.b.ProjectionMember,

@@ -1,27 +1,33 @@
 ﻿//using Microsoft.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore.Metadata.Builders;
 //using Sandpit.Console.Entities;
+//using System;
 
 //namespace Sandpit.Console.Configurations
 //{
-//    public class SemiStaticEntityOwnerConfiguration : IEntityTypeConfiguration<SemiStaticEntityOwner>
+//    public class SemiStaticEntityOwner2Configuration : IEntityTypeConfiguration<SemiStaticEntityOwner2>
 //    {
 
 //        #region - - - - - - Methods - - - - - -
 
-//        void IEntityTypeConfiguration<SemiStaticEntityOwner>.Configure(EntityTypeBuilder<SemiStaticEntityOwner> builder)
+//        void IEntityTypeConfiguration<SemiStaticEntityOwner2>.Configure(EntityTypeBuilder<SemiStaticEntityOwner2> builder)
 //        {
 //            //_ = builder.HasData(new SemiStaticEntityOwner(new SemiStaticEntity { ID = "DE1" }) { ID = 1, Name = "Owner1" });
 
-//            _ = builder.ToTable("SemiStaticEntityOwner");
+//            _ = builder.ToTable("SemiStaticEntityOwner2");
 //            _ = builder.HasKey(e => e.ID);
-//            //_ = builder.HasOne(e => e.JSemiStaticEntity).WithMany();
+
+//            _ = builder.Property<string>("Key1");
+//            _ = builder.Property<Guid?>("Key2");
 //            _ = builder.Property(e => e.Name); //.HasConversion(x => X(x), x => X(x)).UsePropertyAccessMode(PropertyAccessMode.PreferProperty);
 
+//            _ = builder.HasOne(e => e.SemiStaticEntity).WithMany();
+//            _ = builder.HasOne(e => e.SemiStaticEntity2).WithMany().HasForeignKey("Key1", "Key2");
 
 
-//            _ = builder.Property(e => e.JSemiStaticEntity)
-//                    .HasConversion(x => "", x => default!);
+
+//            //_ = builder.Property(e => e.JSemiStaticEntity)
+//            //        .HasConversion(x => "", x => default!);
 //            //        .HasAnnotation("StaticEntity.TypeMapping",
 //            //            new StaticEntityTypeMapping<Entities.SemiStaticEntity, string>(
 //            //                (DbContext c, string s) =>

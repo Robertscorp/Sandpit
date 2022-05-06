@@ -20,6 +20,11 @@ namespace Sandpit.Console
             var _PersistenceContext = _ServiceProvider.GetService<PersistenceContext>()!;
             _PersistenceContext.Database.Migrate();
 
+            //var _Bar = _PersistenceContext.Set<Bar>().ToList().FirstOrDefault();
+
+            //_PersistenceContext.Add(new Foo() { ID = 1, Bar = _Bar });
+            //_PersistenceContext.SaveChanges();
+
             using var _ServiceProvider2
                 = new ServiceCollection()
                         .AddDbContext<PersistenceContext>(opts => opts.UseSqlite("Data Source=Database.db"))
@@ -29,8 +34,21 @@ namespace Sandpit.Console
             //_PersistenceContext2.Database.Migrate();
 
 
+            //foreach (var _X in _PersistenceContext.Set<Entities.SemiStaticEntity>())
+            //{
+            //    _ = 0;
+            //}
 
-            foreach (var _X in _PersistenceContext.Set<SemiStaticEntityOwner>().AsEnumerable())
+            //var _YX = _PersistenceContext.Set<Bar>().ToList();
+            var _XX = _PersistenceContext.Set<Foo>().ToList();
+
+            foreach (var _X in _PersistenceContext.Set<Foo>().Include(x => x.Bar)) //.Select(x => x.JSemiStaticEntity).AsEnumerable())
+            //foreach (var _X in _PersistenceContext.Set<SemiStaticEntityOwner>()) //.Select(x => x.JSemiStaticEntity).AsEnumerable())
+            {
+                _ = 0;
+            }
+
+            foreach (var _X in _PersistenceContext.Set<SemiStaticEntityOwner>().Select(x => x.JSemiStaticEntity.Name).AsEnumerable())
             {
                 _ = 0;
             }

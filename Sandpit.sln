@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandpit.Console", "Sandpit.Console\Sandpit.Console.csproj", "{2680E2EF-4393-48F4-A23B-7160EF03A1B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandpit.SemiStaticEntity", "Sandpit.SemiStaticEntity\Sandpit.SemiStaticEntity.csproj", "{FA3BF570-82D8-4F8A-9F71-21527C1378F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandpit.SemiStaticEntity", "Sandpit.SemiStaticEntity\Sandpit.SemiStaticEntity.csproj", "{FA3BF570-82D8-4F8A-9F71-21527C1378F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

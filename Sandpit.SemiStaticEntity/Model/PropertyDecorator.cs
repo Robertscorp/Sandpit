@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Sandpit.SemiStaticEntity
+namespace Sandpit.SemiStaticEntity.Modelx
 {
 
     public class PropertyDecorator : IProperty

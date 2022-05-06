@@ -10,17 +10,13 @@
         }
 
         public SemiStaticEntityOwner(SemiStaticEntity semiStaticEntity)
-            => this.SemiStaticEntity = semiStaticEntity;
+            => this.JSemiStaticEntity = semiStaticEntity;
 
         public int ID { get; set; }
 
-        public string Name
-        {
-            get;
-            set;
-        } = string.Empty;
+        public string Name { get; }
 
-        public SemiStaticEntity SemiStaticEntity
+        public SemiStaticEntity JSemiStaticEntity
         {
             get;
             set;

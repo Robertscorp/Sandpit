@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
-using Sandpit.SemiStaticEntity;
+using Sandpit.SemiStaticEntity.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
