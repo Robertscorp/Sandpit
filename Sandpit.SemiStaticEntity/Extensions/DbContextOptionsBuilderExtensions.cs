@@ -16,6 +16,7 @@ namespace Sandpit.SemiStaticEntity.Extensions
         {
             //_ = optionsBuilder.ReplaceService<IDbContextServices, DbContextServicesReplacement>();
             _ = optionsBuilder.ReplaceService<IDbSetSource, Replacements.DbSetSource>();
+            _ = optionsBuilder.ReplaceService<IEntityFinderSource, Decorators.EntityFinderSource>();
             _ = optionsBuilder.ReplaceService<IMigrationsModelDiffer, MigrationsModelDiffer>();
             _ = optionsBuilder.ReplaceService<IModelSource, Replacements.ModelSource>();
             //_ = optionsBuilder.ReplaceService<IQueryCompilationContextFactory, QueryCompilationContextFactoryDecorator>();
