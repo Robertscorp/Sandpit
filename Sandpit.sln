@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandpit.Console", "Sandpit.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandpit.SemiStaticEntity", "Sandpit.SemiStaticEntity\Sandpit.SemiStaticEntity.csproj", "{FA3BF570-82D8-4F8A-9F71-21527C1378F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandpit.ConcatenateQueryables", "Sandpit.ConcatenateQueryables\Sandpit.ConcatenateQueryables.csproj", "{DF14F191-287C-4BDE-86F4-9E625C4AC1D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandpit.ConcatenateQueryables.Console", "Sandpit.ConcatenateQueryables.Console\Sandpit.ConcatenateQueryables.Console.csproj", "{EC8E6453-716F-494F-9C9F-87F2D7258ED9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FA3BF570-82D8-4F8A-9F71-21527C1378F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3BF570-82D8-4F8A-9F71-21527C1378F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3BF570-82D8-4F8A-9F71-21527C1378F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF14F191-287C-4BDE-86F4-9E625C4AC1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF14F191-287C-4BDE-86F4-9E625C4AC1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF14F191-287C-4BDE-86F4-9E625C4AC1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF14F191-287C-4BDE-86F4-9E625C4AC1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8E6453-716F-494F-9C9F-87F2D7258ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8E6453-716F-494F-9C9F-87F2D7258ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8E6453-716F-494F-9C9F-87F2D7258ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8E6453-716F-494F-9C9F-87F2D7258ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
